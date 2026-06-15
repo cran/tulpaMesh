@@ -12,7 +12,7 @@
 
 <meta name="author" content="Gilles Colling" />
 
-<meta name="date" content="2026-03-30" />
+<meta name="date" content="2026-06-15" />
 
 <title>Spherical and Temporal Meshes</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Spherical and Temporal Meshes</h1>
 <h4 class="author">Gilles Colling</h4>
-<h4 class="date">2026-03-30</h4>
+<h4 class="date">2026-06-15</h4>
 
 
 
@@ -532,7 +532,7 @@ assembled across the full network:</p>
 <div id="sf-linestring-input" class="section level3">
 <h3>sf LINESTRING input</h3>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.13.1, GDAL 3.11.4, PROJ 9.7.0; sf_use_s2() is TRUE</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="co">#&gt; Linking to GEOS 3.14.1, GDAL 3.12.1, PROJ 9.7.1; sf_use_s2() is TRUE</span></span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>line1 <span class="ot">&lt;-</span> <span class="fu">st_linestring</span>(<span class="fu">cbind</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">3</span>, <span class="dv">0</span>)))</span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>line2 <span class="ot">&lt;-</span> <span class="fu">st_linestring</span>(<span class="fu">cbind</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>), <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">8</span>)))</span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>g_sf <span class="ot">&lt;-</span> <span class="fu">tulpa_mesh_graph</span>(<span class="fu">st_sfc</span>(line1, line2), <span class="at">max_edge =</span> <span class="dv">1</span>)</span>
@@ -567,7 +567,7 @@ versions of the standard ones:</p>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(ns_const<span class="sc">$</span>Ck <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> fem<span class="sc">$</span>C))  <span class="co"># kappa^2 = 4</span></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(ns_const<span class="sc">$</span>Ct <span class="sc">-</span> <span class="dv">9</span> <span class="sc">*</span> fem<span class="sc">$</span>C))  <span class="co"># tau^2 = 9</span></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; [1] 0</span></span></code></pre></div>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; [1] 1.387779e-17</span></span></code></pre></div>
 </div>
 <div id="p2-quadratic-elements" class="section level2">
 <h2>P2 quadratic elements</h2>
@@ -595,14 +595,14 @@ elements:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>mesh_large <span class="ot">&lt;-</span> <span class="fu">tulpa_mesh</span>(<span class="fu">cbind</span>(<span class="fu">runif</span>(<span class="dv">500</span>), <span class="fu">runif</span>(<span class="dv">500</span>)), <span class="at">max_edge =</span> <span class="fl">0.03</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">cat</span>(mesh_large<span class="sc">$</span>n_triangles, <span class="st">&quot;triangles</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; 3670 triangles</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; 3726 triangles</span></span>
 <span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a></span>
 <span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>fem_seq <span class="ot">&lt;-</span> <span class="fu">fem_matrices</span>(mesh_large, <span class="at">parallel =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>fem_par <span class="ot">&lt;-</span> <span class="fu">fem_matrices</span>(mesh_large, <span class="at">parallel =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a></span>
 <span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="co"># Results are identical</span></span>
 <span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="fu">max</span>(<span class="fu">abs</span>(fem_seq<span class="sc">$</span>C <span class="sc">-</span> fem_par<span class="sc">$</span>C))</span>
-<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; [1] 2.168404e-19</span></span></code></pre></div>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; [1] 4.336809e-19</span></span></code></pre></div>
 </div>
 
 
